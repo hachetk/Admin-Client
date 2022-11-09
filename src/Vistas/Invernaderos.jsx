@@ -1,91 +1,12 @@
-import { useState } from "react";
 import {RiArrowDownSLine, RiSearchLine} from "react-icons/ri";
-import { TiDelete } from "react-icons/ti";
-import { AiTwotoneEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import UseUsuarios from "../Hooks/UseUsuarios";
-import RegistrarUsuario from "../Componentes/RegistrarUsuario";
-import EditarUsuario from "../Componentes/EditarUsuario";
-import { useEffect } from "react";
-
-const Usuarios = () => {
-
-    const { handleEditarUsuario,obtenerUsuarios ,eliminarUsuario,usuarios, showModalN, setShowModalN, showModalE, setShowModalE} = UseUsuarios();
-    
-    useEffect(() => {
-        obtenerUsuarios()
-    }, [])
-    
-    const handleClick = (id) =>{
-        eliminarUsuario(id)
-    }
-    const mostarUsuarios = usuarios.map((usuario,index) => {
-        
-        return(
-          <tr key={index}
-          className="bg-white border-b hover:bg-gray-50">
-          <td className="px-5 py-5 border-b border-gray-200 text-sm">
-              <div className="flex items-center">
-                  
-                  <div className="">
-                      <p className="text-gray-900">
-                      {usuario.nombre_usuario+' '+usuario.apellido_usuario}
-                      </p>
-                  </div>
-              </div>
-          </td>
-          <td className="flex items-center px-5 py-5 border-b border-gray-200 text-sm font-semibold">
-            {(usuario.status_usuario == 'VERIFIED')?
-                <>
-                <div className="h-2 w-2 rounded-full bg-green-600"></div>
-                <span className="ml-1 text-green-600">Verificado</span> 
-                </>
-            :  <>
-            <div className="h-2 w-2 rounded-full bg-orange-500"></div>
-            <span className="ml-1 text-orange-500">No Verificado</span> 
-            </>}
-          </td>
-
-          <td className="px-5 py-5 border-b border-gray-200 text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">
-                  {usuario.rut_usuario}
-              </p>
-          </td>
-
-          <td className="px-5 py-5 border-b border-gray-200 text-sm">
-              <p className="text-gray-900 whitespace-no-wrap">
-              {usuario.created_at.split('T')[0]}
-              </p>
-          </td>
-          <td className="px-5 py-5 border-b border-gray-200 text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">
-                  {(usuario.rol_usuario == 1) ? 'Administrador':'Usuario'}
-              </p>
-          </td>
-          <td className="px-5 py-5 border-b border-gray-200 text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">
-                  {usuario.email_usuario}
-              </p>
-          </td>
-          <td className="px-5 py-5 border-b border-gray-200 text-sm font-semibold">
-          <span className="bg-orange-200 rounded-full p-1 px-3 text-green-900 ">
-              <Link to={'invernadero'}>2</Link>
-          </span>
-          </td>
-          <td className="px-5 py-5 border-b border-gray-200 text-sm flex">
-          <button onClick={() => handleEditarUsuario(usuario)}><AiTwotoneEdit className="text-2xl items-center text-sky-700 mx-1"/></button>
-          <button onClick={() =>handleClick(usuario.id_usuario)}><TiDelete className="text-2xl text-red-700"/></button>
-          </td>
-      </tr>
-        )
-    })
-
-    return (
-        <>
+const Invernaderos = () => {
+  return (
+    <>
         <div className="container mx-auto px-4 sm:px-8">
         <div className="py-8">
             <div>
-                <h2 className="text-2xl font-semibold leading-tight">Clientes</h2>
+                <h2 className="text-2xl font-semibold leading-tight">Invernaderos</h2>
             </div>
             <div className="my-2 flex sm:flex-row flex-col items-center">
                
@@ -121,18 +42,18 @@ const Usuarios = () => {
                 <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
                     <table className="min-w-full leading-normal">
                         <thead>
-                            <tr>
+                            <tr className="">
                                 <th
                                     className="px-5 py-3 border-b-2 border-gray-200 bg-gray-200 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                    Nombres
+                                    Nombre
                                 </th>
                                 <th
                                     className="px-5 py-3 border-b-2 border-gray-200 bg-gray-200 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                    Estado
+                                    Ubicación
                                 </th>
                                 <th
                                     className="px-5 py-3 border-b-2 border-gray-200 bg-gray-200 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                    Rut
+                                    Tamaño
                                 </th>
                                 <th
                                     className="px-5 py-3 border-b-2 border-gray-200 bg-gray-200 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
@@ -140,24 +61,60 @@ const Usuarios = () => {
                                 </th>
                                 <th
                                     className="px-5 py-3 border-b-2 border-gray-200 bg-gray-200 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                    Rol
-                                </th>
-                                <th
-                                    className="px-5 py-3 border-b-2 border-gray-200 bg-gray-200 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                    Correo Electronico
-                                </th>
-                                <th
-                                    className="px-5 py-3 border-b-2 border-gray-200 bg-gray-200 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                    Invernaderos
-                                </th>
-                                <th
-                                    className="px-5 py-3 border-b-2 border-gray-200 bg-gray-200 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                    Acciones
+                                    Cliente
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                         {mostarUsuarios}
+                        <tr className="bg-white border-b hover:bg-gray-50">
+                                    <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                                        <div className="flex items-center">
+                                            
+                                            <div className="">
+                                                <p className="text-gray-900">
+                                                Invernadero Chamaco
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                                        <div className="flex items-center">
+                                            
+                                            <div className="">
+                                                <p className="text-gray-900">
+                                                Chiu Chiu
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                                        <div className="flex items-center">
+                                            
+                                            <div className="">
+                                                <p className="text-gray-900">
+                                                Tamaño
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                                        <div className="flex items-center">
+                                            
+                                            <div className="">
+                                                <p className="text-gray-900">
+                                                10-10-2022
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    
+                                    <td className="px-5 py-5 border-b border-gray-200 text-sm font-semibold">
+                                    <span className="bg-orange-200 rounded-full p-1 px-3 text-green-900 ">
+                                        <Link>Cliente</Link>
+                                    </span>
+                                    </td>
+                                    
+                                </tr>
                           
                         </tbody>
                     </table>
@@ -180,12 +137,8 @@ const Usuarios = () => {
                 </div>
             </div>
         </div>
-    </div>
-
-    <RegistrarUsuario />
-    <EditarUsuario />         
+    </div>        
     </>
-    )
+  )
 }
-
-export default Usuarios;
+export default Invernaderos

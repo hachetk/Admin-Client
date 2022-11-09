@@ -11,7 +11,7 @@ import {
 export const Header = () => {
     return (
         <>   
-        <header className="fixed left-0 top-0 w-full bg-[#ffffff] p-8 flex justify-end border-b border-gray-500">
+        <header className="fixed w-full bg-[#ffffff] p-8 flex justify-end border-b border-gray-500">
         
           <ul className="flex items-center gap-4">
             <li>

@@ -23,7 +23,7 @@ export function Sidebar() {
       <div
         className={`bg-[#0b300c] fixed ${
           showMenu ? "-left-0" : "-left-full"
-        } lg:left-0 top-0 w-72 h-full p-8 flex flex-col justify-between transition-all overflow-y-scroll z-50`}
+        } lg:left-0 top-0 w-64 h-full py-4 px-6 flex z-10 flex-col justify-between transition-all`}
       >
         {/* Menu */}
         <div>
@@ -48,7 +48,7 @@ export function Sidebar() {
               </li>
               <li>
                   <Link
-                    to={'/usuario'}
+                    to={'usuarios'}
                     className="hover:bg-slate-400 rounded-lg mb-1 flex font-bold text-lg items-center gap-4 text-gray-200 py-2 transition-colors"
                   >
                     <RiFileUserLine className="ml-2"/>
@@ -59,18 +59,18 @@ export function Sidebar() {
               </li>
               <li>
                   <Link
-                    to={'/kits'}
+                    to={'invernaderos'}
                     className="hover:bg-slate-400 rounded-lg mb-1 flex font-bold text-lg items-center gap-4 text-gray-200 py-2 transition-colors"
                   >
-                    <RiSwapBoxLine className="ml-2" /> Kit's
+                  <GiGreenhouse className="ml-2"/> Invernaderos  
                   </Link>
               </li>    
               <li>
                   <Link
-                    to={''}
+                    to={'kits'}
                     className="hover:bg-slate-400 rounded-lg flex mb-1 font-bold text-lg items-center gap-4 text-gray-200 py-2 transition-colors"
                   >
-                    <GiGreenhouse className="ml-2"/> Invernaderos
+                    <RiSwapBoxLine className="ml-2" /> Kit's
                   </Link>
               </li>    
               <li>

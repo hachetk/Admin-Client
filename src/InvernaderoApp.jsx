@@ -1,31 +1,39 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { UserProvider } from "./Componentes/AuthProtected/UserContext";
-import { AdminPrincipal } from './Vistas/AdminPrincipal';
-import { Usuarios } from './Vistas/Usuarios';
-import  LoginAuth from "./Vistas/Auth/LoginAuth";
+import AuthLayout from "./Componentes/AuthProtected/AuthLayout";
+import LoginAuth from "./Vistas/Auth/LoginAuth";
+import { AuthProvider } from "./Context/AuthProvider";
+import { UsuariosProvider } from "./Context/UsuariosProvider";
+import RutaProtegida from "./Componentes/AuthProtected/RutaProtegida";
+import Dashboard from "./Vistas/Dashboard";
+import Usuarios from "./Vistas/Usuarios";
+import Kit from "./Vistas/Kit";
+import Invernaderos from "./Vistas/Invernaderos";
+import Invernadero from "./Componentes/Invernadero";
 
 
-export const InvernaderoApp = () => {
+ function InvernaderoApp() {
     return (
-            <UserProvider>
-                <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<LoginAuth/>} >
-                    <Route path='/login' element={<LoginAuth/>} />
-                    </Route>
+        <BrowserRouter>
+            <AuthProvider>
+                <UsuariosProvider>
+                    <Routes>
+                        <Route path="/" element={<AuthLayout />}>
+                            <Route index element={<LoginAuth />} />
+                        </Route>
                     
-                    <Route path='/dashboard' element={<AdminPrincipal />}/>
-                    <Route path='/usuario' element={<Usuarios />} />
-                    
-                </Routes>
-                </BrowserRouter>
-            </UserProvider> 
-        
-            
-             
-            
-          
+                        <Route path="/dashboard" element={<RutaProtegida />} >
+                            <Route index element={<Dashboard />} />
+                            <Route path="usuarios" element={<Usuarios />} />
+                            <Route path="invernaderos" element={<Invernaderos />} />
+                            <Route path="kits" element={<Kit />} />
+                            <Route path="usuarios/invernadero" element={<Invernadero />} />
+                        </Route>
+                    </Routes>
+                </UsuariosProvider>
+            </AuthProvider>
+        </BrowserRouter>
         
     );
     
 }
+export default InvernaderoApp
