@@ -1,27 +1,23 @@
 import { useState } from "react";
 import {RiArrowDownSLine, RiSearchLine} from "react-icons/ri";
 import { TiDelete } from "react-icons/ti";
-import { AiTwotoneEdit } from "react-icons/ai";
+import { AiTwotoneEdit, AiTwotoneHome, AiOutlineRight, AiOutlineCaretRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import UseUsuarios from "../Hooks/UseUsuarios";
 import RegistrarUsuario from "../Componentes/RegistrarUsuario";
 import EditarUsuario from "../Componentes/EditarUsuario";
 import { useEffect } from "react";
+import Alertas from "../Componentes/Alertas";
+import { list } from "postcss";
+import AlertaSinInvernadero from "../Componentes/AlertaSinInvernadero";
+import moment from "moment";
 
 const Usuarios = () => {
 
-    const { handleEditarUsuario,obtenerUsuarios ,eliminarUsuario,usuarios, showModalN, setShowModalN, showModalE, setShowModalE} = UseUsuarios();
-    
-    useEffect(() => {
-        obtenerUsuarios()
-    }, [])
-    
-    const handleClick = (id) =>{
-        eliminarUsuario(id)
-    }
+    const { mostarCantidadInvernadero, handleEditarUsuario, handleModalEliminar,usuarios, showModalEliminar,eliminarUsuario,showModalN, setShowModalN, setModalSinInfo} = UseUsuarios();
     const mostarUsuarios = usuarios.map((usuario,index) => {
-        
         return(
+
           <tr key={index}
           className="bg-white border-b hover:bg-gray-50">
           <td className="px-5 py-5 border-b border-gray-200 text-sm">
@@ -34,7 +30,7 @@ const Usuarios = () => {
                   </div>
               </div>
           </td>
-          <td className="flex items-center px-5 py-5 border-b border-gray-200 text-sm font-semibold">
+          <td className="flex items-center px-5 py-8 border-gray-200 text-sm font-semibold">
             {(usuario.status_usuario == 'VERIFIED')?
                 <>
                 <div className="h-2 w-2 rounded-full bg-green-600"></div>
@@ -54,7 +50,7 @@ const Usuarios = () => {
 
           <td className="px-5 py-5 border-b border-gray-200 text-sm">
               <p className="text-gray-900 whitespace-no-wrap">
-              {usuario.created_at.split('T')[0]}
+              {(usuario.created_at === null) ? 'sin información' : moment(usuario.created_at).format('MM-DD-YY')}
               </p>
           </td>
           <td className="px-5 py-5 border-b border-gray-200 text-sm">
@@ -68,13 +64,21 @@ const Usuarios = () => {
               </p>
           </td>
           <td className="px-5 py-5 border-b border-gray-200 text-sm font-semibold">
-          <span className="bg-orange-200 rounded-full p-1 px-3 text-green-900 ">
-              <Link to={'invernadero'}>2</Link>
+          <span className="bg-orange-300 rounded-full p-1 px-3 text-gray-900 ">
+            {(mostarCantidadInvernadero(usuario.id_usuario)) ? (
+                <>
+                <Link to={`/dashboard/usuarios/${usuario.id_usuario}`}>{mostarCantidadInvernadero(usuario.id_usuario)}</Link>
+                </>
+            ): (
+                <>
+                <button onClick={() => setModalSinInfo(true)}>0</button>
+                </>
+            )}
           </span>
           </td>
-          <td className="px-5 py-5 border-b border-gray-200 text-sm flex">
-          <button onClick={() => handleEditarUsuario(usuario)}><AiTwotoneEdit className="text-2xl items-center text-sky-700 mx-1"/></button>
-          <button onClick={() =>handleClick(usuario.id_usuario)}><TiDelete className="text-2xl text-red-700"/></button>
+          <td className="px-5 py-5  border-gray-200 text-sm flex">
+          <button className="hover:scale-[1.04]" onClick={() => handleEditarUsuario(usuario)}><AiTwotoneEdit className="text-2xl items-center text-sky-700 mx-1"/></button>
+          <button className="hover:scale-[1.04]" onClick={() => handleModalEliminar(usuario)}><TiDelete className="text-2xl text-red-700"/></button>
           </td>
       </tr>
         )
@@ -82,33 +86,42 @@ const Usuarios = () => {
 
     return (
         <>
-        <div className="container mx-auto px-4 sm:px-8">
-        <div className="py-8">
-            <div>
-                <h2 className="text-2xl font-semibold leading-tight">Clientes</h2>
-            </div>
-            <div className="my-2 flex sm:flex-row flex-col items-center">
-               
-                    
-                    <div className="relative">
-                        <select
-                            className="rounded-r border sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none  focus:bg-white focus:border-gray-500 focus:ring-2 focus:ring-green-800">
-                            <option>Todos</option>
-                            <option>Verificado</option>
-                            <option>No Verificado</option>
-                        </select>
-                        <div
-                            className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <RiArrowDownSLine />
-                        </div>
+        <div className="container z-10  mx-auto px-4 sm:px-8">
+        <div className="py-4">
+            <nav className="py-2 border-b-2">
+                <ol className="inline-flex items-center space-x-1 md:space-x-3">
+                    <li className="inline-flex items-center">
+                        <Link to={'/dashboard'} className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400">
+                            <AiTwotoneHome className="mr-1 w-3 h-3.5"/>
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                    <div className="flex items-center">
+                        
+                        <AiOutlineCaretRight className="w-3 h-4 text-gray-600"/>
+                        <span className="text-sm font-medium text-gray-600 md:ml-2">Usuarios</span>
                     </div>
-                
+                    </li>
+                </ol>
+            </nav>
+            
+            <h2 className="text-xl font-medium leading-tight my-8">Listado de Clientes</h2>
+           
+            <div className="flex sm:flex-row flex-col items-center">
+               
                 <div className="relative">
-                    <span className="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                    <RiSearchLine  className="h-4 w-4 fill-current text-gray-500"/>
+                </div>
+                <input type="text" className="bg-white border border-gray-400 text-gray-700 sm:text-sm rounded-lg placeholder-gray-400 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 block w-full pl-8 py-2 pr-6" placeholder="Buscar"></input>
+                    {/* <span className="h-full absolute inset-y-0 left-0 flex items-center pl-2">
                     <RiSearchLine  className="h-4 w-4 fill-current text-gray-500"/>
                     </span>
-                    <input placeholder="Search"
-                        className="appearance-none rounded-xl sm:rounded-l-none border border-gray-400 block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-800" />
+                    <input 
+                        type="text"
+                        placeholder="Search"
+                        className="appearance-none rounded-lg sm:rounded-l-none border border-gray-400 pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-800" /> */}
                 </div>
                 <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                     <button className="border-green-700 bg-green-700 text-white rounded-lg  font-semibold shadow-md shadow-gray-300 hover:scale-[1.02] transition-transform text-md px-5 py-2 text-center" type="submit"
@@ -144,7 +157,7 @@ const Usuarios = () => {
                                 </th>
                                 <th
                                     className="px-5 py-3 border-b-2 border-gray-200 bg-gray-200 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                    Correo Electronico
+                                    Correo Electrónico
                                 </th>
                                 <th
                                     className="px-5 py-3 border-b-2 border-gray-200 bg-gray-200 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
@@ -163,9 +176,7 @@ const Usuarios = () => {
                     </table>
                     <div
                         className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-                        <span className="text-xs xs:text-sm text-gray-900">
-                            Mostrando 1 a 4 de 50 Usuarios
-                        </span>
+                        
                         <div className="inline-flex mt-2 xs:mt-0">
                             <button
                                 className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
@@ -181,9 +192,10 @@ const Usuarios = () => {
             </div>
         </div>
     </div>
-
+    <Alertas modal = {showModalEliminar} accion={handleModalEliminar} accion2 ={eliminarUsuario} data={'usuario'}/>     
     <RegistrarUsuario />
-    <EditarUsuario />         
+    <EditarUsuario />    
+    <AlertaSinInvernadero />
     </>
     )
 }

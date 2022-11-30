@@ -4,11 +4,11 @@ import { useState } from "react";
 import Alerta from "./Alerta";
 const RegistrarUsuario = () => {
 
-     const [nombre, setNombres] =useState('')
-     const [apellido, setApellidos] =useState('')
-     const [email, setEmail] =useState('')
-     const [rut, setRut] =useState('')
-     const [password, setPass] =useState('')
+     const [nombre_usuario, setNombres] =useState('')
+     const [apellido_usuario, setApellidos] =useState('')
+     const [email_usuario, setEmail] =useState('')
+     const [rut_usuario, setRut] =useState('')
+     const [password_usuario, setPass] =useState('')
      const [rol, setRol] =useState('Administrador')
    
     const { mostrarAlerta, alerta, submitUsuario, showModalN, setShowModalN } = UseUsuarios();
@@ -16,7 +16,7 @@ const RegistrarUsuario = () => {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        if ([nombre, apellido, rut, email, password].includes('')) {
+        if ([nombre_usuario, apellido_usuario, rut_usuario, email_usuario, password_usuario].includes('')) {
            mostrarAlerta({
             msg: 'Todos los campos son olbigatorios',
             error: true
@@ -24,7 +24,7 @@ const RegistrarUsuario = () => {
            return
         }
         
-       await submitUsuario({nombre, apellido,rut, email, password})
+       await submitUsuario({nombre_usuario, apellido_usuario,rut_usuario, email_usuario, password_usuario})
        setNombres('')
        setApellidos('')
        setEmail('')
@@ -59,7 +59,7 @@ const RegistrarUsuario = () => {
                             <input type="text"  className="shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 block w-full p-2.5" 
                             id="nombres"
                             placeholder="Nombre completo"
-                            value={nombre} 
+                            value={nombre_usuario} 
                             onChange={e => setNombres(e.target.value)}
                             required="" />
                         </div>
@@ -69,7 +69,7 @@ const RegistrarUsuario = () => {
                             className="shadow-lg-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 block w-full p-2.5" 
                             id="apellidos" 
                             placeholder="Apellidos completo" 
-                            value={apellido}
+                            value={apellido_usuario}
                             onChange={e => setApellidos(e.target.value)}
                             required=""/>
                         </div>
@@ -79,7 +79,7 @@ const RegistrarUsuario = () => {
                             id="rut"
                             className="shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 block w-full p-2.5" 
                             placeholder="Ingrese su Rut"
-                            value={rut}
+                            value={rut_usuario}
                             onChange={e => setRut(e.target.value)}
                             required=""/>
                         </div>
@@ -89,7 +89,7 @@ const RegistrarUsuario = () => {
                             id="email" 
                             className="shadow-lg-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 block w-full p-2.5"
                             placeholder="ejemplo@company.cl"
-                            value={email} 
+                            value={email_usuario} 
                             onChange={e => setEmail(e.target.value)}
                             required=""/>
                         </div>
@@ -99,7 +99,7 @@ const RegistrarUsuario = () => {
                             id="pass"  
                             className="shadow-lg-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800 focus:border-green-800 block w-full p-2.5" 
                             placeholder="••••••••"
-                            value={password} 
+                            value={password_usuario} 
                             onChange={e => setPass(e.target.value)}
                             required=""/>
                         </div>
@@ -119,7 +119,6 @@ const RegistrarUsuario = () => {
                             onChange={e => setRol(e.target.value)}  > 
                                 <option >Administrador</option>
                                 <option >Usuario</option>
-                                <option >Visitante</option>
                             </select>
                         </div>
                     </div>

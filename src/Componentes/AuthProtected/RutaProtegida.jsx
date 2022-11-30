@@ -11,10 +11,10 @@ const RutaProtegida = () => {
         <>
              {estadoUser ? 
              (
-                <div className='bg-red-100'>
+                <div className=' bg-red-100'>
                     <Sidebar/>
                     
-                    <div className=' bg-gray-100 md:min-h-screen'>
+                    <div className='bg-gray-100 md:min-h-screen'>
                         <Header />
                         <main className='relative md:ml-64 sm:pt-28 md:pt-32'>
                             <Outlet />

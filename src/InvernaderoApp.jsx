@@ -7,8 +7,10 @@ import RutaProtegida from "./Componentes/AuthProtected/RutaProtegida";
 import Dashboard from "./Vistas/Dashboard";
 import Usuarios from "./Vistas/Usuarios";
 import Kit from "./Vistas/Kit";
+import Reporte from "./Vistas/Reporte";
 import Invernaderos from "./Vistas/Invernaderos";
 import Invernadero from "./Componentes/Invernadero";
+import { ClienteDatos } from "./Componentes/ClienteDatos";
 
 
  function InvernaderoApp() {
@@ -23,10 +25,12 @@ import Invernadero from "./Componentes/Invernadero";
                     
                         <Route path="/dashboard" element={<RutaProtegida />} >
                             <Route index element={<Dashboard />} />
-                            <Route path="usuarios" element={<Usuarios />} />
                             <Route path="invernaderos" element={<Invernaderos />} />
                             <Route path="kits" element={<Kit />} />
-                            <Route path="usuarios/invernadero" element={<Invernadero />} />
+                            <Route path="reporte" element={<Reporte />} />
+                            <Route path="usuarios" element={<Usuarios />} /> 
+                            <Route path="usuarios/:id" element={<Invernadero />} />
+                            <Route path="invernaderos/:id" element={<ClienteDatos />} />
                         </Route>
                     </Routes>
                 </UsuariosProvider>

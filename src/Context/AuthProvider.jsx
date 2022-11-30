@@ -33,13 +33,24 @@ const AuthProvider = ({children}) => {
         autenticarusuario()
     }, [])
 
+    const handleLogout = () => {
+        setEstadoUser(false)
+        window.localStorage.removeItem('loggedUser')
+        document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+    }
+
     return (
         <AuthContext.Provider
             value={{
                 auth,
                 setAuth,
                 setEstadoUser,
-                estadoUser
+                estadoUser,
+                handleLogout
             }}
         >
             {children}

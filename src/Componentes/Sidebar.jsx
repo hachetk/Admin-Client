@@ -10,8 +10,11 @@ import {
 } from "react-icons/ri";
 import { GiGreenhouse } from "react-icons/gi";
 import { Link } from 'react-router-dom';
+import UseAuth from '../Hooks/UseAuth';
 
 export function Sidebar() {
+
+  const { handleLogout } = UseAuth();
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -21,9 +24,9 @@ export function Sidebar() {
   return (
     <>
       <div
-        className={`bg-[#0b300c] fixed ${
+        className={`z-30 bg-green-700 fixed ${
           showMenu ? "-left-0" : "-left-full"
-        } lg:left-0 top-0 w-64 h-full py-4 px-6 flex z-10 flex-col justify-between transition-all`}
+        } lg:left-0 top-0 w-64 h-full py-4 px-6 flex flex-col justify-between transition-all`}
       >
         {/* Menu */}
         <div>
@@ -43,7 +46,7 @@ export function Sidebar() {
                     to={'/dashboard'}
                     className="hover:bg-slate-400 rounded-lg mt-20 mb-1 flex font-bold text-lg items-center gap-4 text-gray-200 py-2 transition-colors"
                   >
-                    <RiDashboard3Line className="ml-2" /> Dashboard
+                    <RiDashboard3Line className="ml-2" /> Home
                   </Link>
               </li>
               <li>
@@ -72,26 +75,20 @@ export function Sidebar() {
                   >
                     <RiSwapBoxLine className="ml-2" /> Kit's
                   </Link>
-              </li>    
-              <li>
-                  <Link
-                    to={''}
-                    className="hover:bg-slate-400 rounded-lg flex font-bold text-lg items-center gap-4 text-gray-200 py-2 transition-colors"
-                  >
-                    <GiGreenhouse className="ml-2"/> Sensores
-                  </Link>
-              </li>     
+              </li>  
+                   
             </ul>
           </nav>
         </div>
         {/* Logout */}
         <div>
-          <a
-            href="#"
+          <button
+            type='button'
             className="flex items-center gap-4 text-lg text-gray-400 hover:text-gray-200 transition-colors"
+            onClick={handleLogout}
           >
             <RiLogoutCircleRLine /> Logout
-          </a>
+          </button>
         </div>
       </div>
       {/* Btn menu movile */}

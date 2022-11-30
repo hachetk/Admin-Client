@@ -5,10 +5,11 @@ import Alerta from '../../Componentes/Alerta';
 import ClienteAxios from '../../config/ClienteAxios';
 import UseAuth from '../../Hooks/UseAuth';
 
+
 const LoginAuth = () => {
     
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email_usuario, setEmail] = useState('')
+    const [password_usuario, setPassword] = useState('')
     const [alerta, setAlerta] = useState({})
 
     const { setAuth, setEstadoUser } = UseAuth();
@@ -17,7 +18,7 @@ const LoginAuth = () => {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        if([email, password].includes('')){
+        if([email_usuario, password_usuario].includes('')){
             setAlerta({
                 msg: 'Todos los campos son obligatorios',
                 error: true
@@ -29,7 +30,7 @@ const LoginAuth = () => {
         
 
         try {
-            const {data} = await ClienteAxios.post('/auth/login', { email, password})
+            const {data} = await ClienteAxios.post('/auth/login', { email_usuario, password_usuario})
             setAlerta({})
             document.cookie = `token=${data.tokenSession}; max-age=${3600*3};path=/;samesite=stric`
             window.localStorage.setItem('loggedUser',JSON.stringify(data.data[0]))
@@ -52,11 +53,16 @@ const LoginAuth = () => {
     
   return (
     <>
+        
          <form  
-         className='max-w-[400px] w-full mx-auto rounded-lg bg-white p-8 px-8'
+         className='max-w-xl m-4 p-10 bg-white rounded-xl shadow-xl'
          onSubmit={handleSubmit}
-         >
-                <h2 className='text-4xl text-[#505568] font-bold text-center'>Iniciar sesión</h2>
+         >      
+                <div className='w-full rounded'>
+                <img  src="https://i.ibb.co/NpbjWjf/LOGO-MH-GLOBAL.webp" alt="logo"></img>
+                {/* <a href="https://imgbb.com/"><img src="https://i.ibb.co/NpbjWjf/LOGO-MH-GLOBAL.webp" alt="LOGO-MH-GLOBAL" border="0"></a> */}
+                </div>
+                <h2 className='text-4xl text-[#505568] mt-4 font-bold text-center'>Iniciar sesión</h2>
                 {msg && <Alerta alerta={alerta} />}
                 <div className='flex flex-col text-[#505568] py-2'>
                     <label>Correo</label>
@@ -64,7 +70,7 @@ const LoginAuth = () => {
                     id="email" 
                     type="text" 
                     placeholder="Ingrese su Correo"
-                    value={email}
+                    value={email_usuario}
                     onChange={e => setEmail(e.target.value)}
                     />
                 </div>
@@ -74,7 +80,7 @@ const LoginAuth = () => {
                     id="password" 
                     type="password" 
                     placeholder="Contraseña"
-                    value={password}
+                    value={password_usuario}
                     onChange={e => setPassword(e.target.value)}
                     />
                 </div>
